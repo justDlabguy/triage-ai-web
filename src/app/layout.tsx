@@ -13,21 +13,69 @@ const inter = Inter({
 export const viewport = "width=device-width, initial-scale=1, viewport-fit=cover";
 
 export const metadata: Metadata = {
-  title: "Triage AI - AI-Powered Healthcare Triage",
+  title: "HealthPal - AI-Powered Healthcare Triage",
   description: "AI-powered healthcare triage system for Nigerian communities. Get instant symptom analysis and find nearby emergency clinics.",
   keywords: ["healthcare", "triage", "AI", "Nigeria", "medical", "emergency", "clinics", "accessibility", "responsive"],
-  authors: [{ name: "Triage AI Team" }],
-  robots: "index, follow",
+  authors: [{ name: "HealthPal Team" }],
+  creator: "HealthPal",
+  publisher: "HealthPal",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://healthpal.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "HealthPal - AI-Powered Healthcare Triage",
+    description: "AI-powered healthcare triage system for Nigerian communities",
+    url: '/',
+    siteName: 'HealthPal',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'HealthPal - Healthcare Assistant',
+      },
+    ],
+    locale: 'en_NG',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "HealthPal - AI-Powered Healthcare Triage",
+    description: "AI-powered healthcare triage system for Nigerian communities",
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+  },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0f172a" }
   ],
-  openGraph: {
-    title: "Triage AI - AI-Powered Healthcare Triage",
-    description: "AI-powered healthcare triage system for Nigerian communities",
-    type: "website",
-    locale: "en_NG",
-  },
   other: {
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",

@@ -153,7 +153,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="/dashboard">
                 <IconStethoscope className="!size-5 text-blue-600" />
-                <span className="text-base font-semibold text-blue-900">Triage AI</span>
+                <span className="text-base font-semibold text-blue-900">HealthPal</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

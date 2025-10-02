@@ -98,11 +98,11 @@ export function RegisterForm({
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-            {/* Triage AI Branding Header */}
+            {/* HealthPal Branding Header */}
             <div className="text-center space-y-2">
                 <div className="flex items-center justify-center gap-2 text-2xl font-bold text-emerald-600">
                     <Heart className="h-8 w-8" />
-                    <span>Triage AI</span>
+                    <span>HealthPal</span>
                     <Stethoscope className="h-8 w-8" />
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -114,7 +114,7 @@ export function RegisterForm({
                 <CardHeader className="space-y-1">
                     <CardTitle className="text-2xl text-center">Create Account</CardTitle>
                     <CardDescription className="text-center">
-                        Join Triage AI to access personalized healthcare guidance
+                        Join HealthPal to access personalized healthcare guidance
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

@@ -76,7 +76,7 @@ export default function ProfilePage() {
                             </CardHeader>
                             <CardContent className="text-sm text-blue-700">
                                 <p>
-                                    This is a demo account for showcasing Triage AI features.
+                                    This is a demo account for showcasing HealthPal features.
                                     No real personal or medical data is stored. To create a real account,
                                     please use the registration form.
                                 </p>

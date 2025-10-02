@@ -11,6 +11,6 @@ export default function RegisterPage() {
 }
 
 export const metadata = {
-  title: "Register - Triage AI",
-  description: "Create your Triage AI account for personalized healthcare guidance",
+  title: "Register - HealthPal",
+  description: "Create your HealthPal account for personalized healthcare guidance",
 }

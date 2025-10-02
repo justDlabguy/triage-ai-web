@@ -14,7 +14,7 @@ export const loginSchema = z.object({
 export type LoginFormData = z.infer<typeof loginSchema>
 
 export const demoCredentials = {
-  email: "demo@triageai.ng",
+  email: "demo@healthpal.ng",
   password: "demo123",
 }
 

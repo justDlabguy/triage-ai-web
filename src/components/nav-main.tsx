@@ -26,7 +26,7 @@ export function NavMain({
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
-              tooltip="Start AI Triage"
+              tooltip="Start HealthPal Triage"
               className="bg-blue-600 text-white hover:bg-blue-700 hover:text-white active:bg-blue-700 active:text-white min-w-8 duration-200 ease-linear"
               asChild
             >

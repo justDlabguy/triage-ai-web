@@ -333,7 +333,7 @@ export default function DashboardPage() {
                 Demo Mode Information
               </CardTitle>
               <CardDescription className="text-yellow-700">
-                You are currently using the demonstration version of Triage AI
+                You are currently using the demonstration version of HealthPal
               </CardDescription>
             </CardHeader>
             <CardContent>

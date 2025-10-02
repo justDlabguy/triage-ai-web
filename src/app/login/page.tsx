@@ -11,6 +11,6 @@ export default function LoginPage() {
 }
 
 export const metadata = {
-  title: "Login - Triage AI",
-  description: "Sign in to your Triage AI healthcare dashboard",
+  title: "Login - HealthPal",
+  description: "Sign in to your HealthPal healthcare dashboard",
 }

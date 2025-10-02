@@ -107,11 +107,11 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      {/* Triage AI Branding Header */}
+      {/* HealthPal Branding Header */}
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2 text-2xl font-bold text-emerald-600">
           <Heart className="h-8 w-8" />
-          <span>Triage AI</span>
+          <span>HealthPal</span>
           <Stethoscope className="h-8 w-8" />
         </div>
         <p className="text-sm text-muted-foreground">
