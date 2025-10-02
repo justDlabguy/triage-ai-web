@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -44,19 +44,7 @@ export function ClinicSearch({ location, address, onClinicSelect }: ClinicSearch
   const [emergencyOnly, setEmergencyOnly] = useState(false)
   const [expandedRadius, setExpandedRadius] = useState(false)
 
-  // Search for clinics when location changes
-  useEffect(() => {
-    if (location) {
-      searchClinics()
-    }
-  }, [location])
-
-  // Filter clinics when search query or filters change
-  useEffect(() => {
-    filterClinics()
-  }, [clinics, searchQuery, emergencyOnly])
-
-  const searchClinics = async (radius?: number) => {
+  const searchClinics = useCallback(async (radius?: number) => {
     setIsLoading(true)
     setError(null)
 
@@ -84,9 +72,9 @@ export function ClinicSearch({ location, address, onClinicSelect }: ClinicSearch
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [location, radiusFilter, emergencyOnly, expandedRadius])
 
-  const filterClinics = () => {
+  const filterClinics = useCallback(() => {
     let filtered = clinics
 
     // Filter by search query
@@ -105,7 +93,7 @@ export function ClinicSearch({ location, address, onClinicSelect }: ClinicSearch
     }
 
     setFilteredClinics(filtered)
-  }
+  }, [clinics, searchQuery, emergencyOnly])
 
   const handleRadiusChange = (newRadius: string) => {
     setRadiusFilter(newRadius)
@@ -127,6 +115,18 @@ export function ClinicSearch({ location, address, onClinicSelect }: ClinicSearch
   const callClinic = (phone: string) => {
     window.open(`tel:${phone}`, '_self')
   }
+
+  // Search for clinics when location changes
+  useEffect(() => {
+    if (location) {
+      searchClinics()
+    }
+  }, [location, searchClinics])
+
+  // Filter clinics when search query or filters change
+  useEffect(() => {
+    filterClinics()
+  }, [clinics, searchQuery, emergencyOnly, filterClinics])
 
   return (
     <div className="space-y-6">

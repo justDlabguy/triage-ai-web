@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const protectedRoutes = ['/dashboard', '/triage', '/clinics', '/profile']
 
 // Define public routes that don't require authentication
-const publicRoutes = ['/login', '/']
+const publicRoutes = ['/login', '/register', '/']
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl

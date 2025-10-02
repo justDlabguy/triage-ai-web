@@ -15,7 +15,6 @@ interface ErrorBoundaryState {
 interface ErrorBoundaryProps {
   children: React.ReactNode
   fallback?: React.ComponentType<{ error: Error; resetError: () => void }>
-  onError?: (error: Error, errorInfo: React.ErrorInfo) => void
 }
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -33,9 +32,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     
     // Log error to monitoring service
     console.error('ErrorBoundary caught an error:', error, errorInfo)
-    
-    // Call optional error handler
-    this.props.onError?.(error, errorInfo)
   }
 
   resetError = () => {

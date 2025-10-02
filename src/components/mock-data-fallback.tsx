@@ -20,7 +20,7 @@ export function MockDataFallback({
   className,
   showInProduction = false 
 }: MockDataFallbackProps) {
-  const { isDemoMode, useMockData } = useDemoStore();
+  const { isDemoMode } = useDemoStore();
   
   // Only show in demo mode or if explicitly allowed in production
   if (!isDemoMode && !showInProduction) {
@@ -109,7 +109,7 @@ export function MockDataFallback({
 export function useApiWithFallback() {
   const { isDemoMode, useMockData } = useDemoStore();
 
-  const handleApiError = (error: Error | string, mockDataFn?: () => any) => {
+  const handleApiError = (error: Error | string, mockDataFn?: () => unknown) => {
     console.error('API Error:', error);
     
     // In demo mode, return mock data if available

@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Heart, Stethoscope } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -37,9 +37,19 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { login, demoLogin } = useAuthStore()
   const { setDemoMode } = useDemoStore()
+
+  // Check for success message from registration
+  useEffect(() => {
+    const message = searchParams.get('message')
+    if (message) {
+      setSuccessMessage(message)
+    }
+  }, [searchParams])
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -117,6 +127,12 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {successMessage && (
+            <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-md">
+              {successMessage}
+            </div>
+          )}
+
           {error && (
             <div className="mb-4">
               <ErrorHandler
@@ -206,8 +222,8 @@ export function LoginForm({
             <p>Demo credentials: {demoCredentials.email}</p>
             <p className="mt-2">
               Don&apos;t have an account?{" "}
-              <a href="#" className="text-emerald-600 underline underline-offset-4 hover:text-emerald-700">
-                Contact your healthcare provider
+              <a href="/register" className="text-emerald-600 underline underline-offset-4 hover:text-emerald-700">
+                Create account
               </a>
             </p>
           </div>

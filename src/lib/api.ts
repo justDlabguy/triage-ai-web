@@ -245,10 +245,30 @@ class ApiClient {
     }
   }
 
+  // Registration method
+  async register(userData: {
+    email: string;
+    password: string;
+    confirm_password: string;
+    username: string;
+    full_name: string;
+    phone_number: string;
+    age?: number;
+    gender: string;
+    location: string;
+  }): Promise<{ message: string }> {
+    try {
+      const response = await this.post<{ message: string }>('/auth/register', userData);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // Demo login for quick access
   async demoLogin(): Promise<AuthUser> {
     const demoCredentials: LoginRequest = {
-      email: 'demo@triageai.com',
+      email: 'demo@triageai.ng',
       password: 'demo123',
     };
     

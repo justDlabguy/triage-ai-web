@@ -11,11 +11,24 @@ interface AuthState {
 
   // Actions
   login: (credentials: LoginRequest) => Promise<void>;
+  register: (userData: RegisterData) => Promise<void>;
   demoLogin: () => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
   checkAuth: () => void;
   setUser: (user: AuthUser | null) => void;
+}
+
+interface RegisterData {
+  email: string;
+  password: string;
+  confirm_password: string;
+  username: string;
+  fullName: string;
+  phoneNumber: string;
+  age?: number;
+  gender: string;
+  location: string;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -42,6 +55,37 @@ export const useAuthStore = create<AuthState>()(
         } catch (error: unknown) {
           set({ 
             error: error instanceof Error ? error.message : 'Login failed',
+            isLoading: false,
+            user: null,
+            isAuthenticated: false
+          });
+          throw error;
+        }
+      },
+
+      register: async (userData: RegisterData) => {
+        set({ isLoading: true, error: null });
+        
+        try {
+          await apiClient.register({
+            email: userData.email,
+            password: userData.password,
+            confirm_password: userData.confirm_password,
+            username: userData.username,
+            full_name: userData.fullName,
+            phone_number: userData.phoneNumber,
+            age: userData.age,
+            gender: userData.gender,
+            location: userData.location,
+          });
+          
+          set({ 
+            isLoading: false,
+            error: null 
+          });
+        } catch (error: unknown) {
+          set({ 
+            error: error instanceof Error ? error.message : 'Registration failed',
             isLoading: false,
             user: null,
             isAuthenticated: false

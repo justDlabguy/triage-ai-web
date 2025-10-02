@@ -10,12 +10,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export const viewport = "width=device-width, initial-scale=1, viewport-fit=cover";
+
 export const metadata: Metadata = {
   title: "Triage AI - AI-Powered Healthcare Triage",
   description: "AI-powered healthcare triage system for Nigerian communities. Get instant symptom analysis and find nearby emergency clinics.",
   keywords: ["healthcare", "triage", "AI", "Nigeria", "medical", "emergency", "clinics", "accessibility", "responsive"],
   authors: [{ name: "Triage AI Team" }],
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
   robots: "index, follow",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
@@ -52,12 +53,7 @@ export default function RootLayout({
           inter.className
         )}
       >
-        <ErrorBoundary
-          onError={(error, errorInfo) => {
-            // Log to monitoring service in production
-            console.error('Global error boundary caught error:', error, errorInfo);
-          }}
-        >
+        <ErrorBoundary>
           <AuthProvider>
             <div className="flex-1 flex flex-col">
               {children}

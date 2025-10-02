@@ -74,8 +74,8 @@ export function DemoModeToggle() {
                 Pre-loaded Scenario
               </Label>
               <Select
-                value={currentScenario || ""}
-                onValueChange={(value) => setCurrentScenario(value || null)}
+                value={currentScenario || "none"}
+                onValueChange={(value) => setCurrentScenario(value === "none" ? null : value)}
               >
                 <SelectTrigger 
                   id="scenario-select"
@@ -84,7 +84,7 @@ export function DemoModeToggle() {
                   <SelectValue placeholder="Select a demo scenario" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No scenario selected</SelectItem>
+                  <SelectItem value="none">No scenario selected</SelectItem>
                   {DEMO_SCENARIOS.map((scenario) => (
                     <SelectItem key={scenario.id} value={scenario.id}>
                       <div className="flex items-center gap-2">

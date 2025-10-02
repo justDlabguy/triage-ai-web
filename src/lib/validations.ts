@@ -18,6 +18,36 @@ export const demoCredentials = {
   password: "demo123",
 }
 
+// Registration form validation
+export const registerSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, "Password must contain at least one uppercase letter, one lowercase letter, and one number"),
+  confirmPassword: z.string(),
+  username: z.string()
+    .min(3, "Username must be at least 3 characters")
+    .max(20, "Username must be less than 20 characters")
+    .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"),
+  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  phoneNumber: z.string()
+    .min(10, "Please enter a valid phone number")
+    .regex(/^\+?[\d\s\-\(\)]+$/, "Please enter a valid phone number"),
+  age: z.number()
+    .min(13, "You must be at least 13 years old")
+    .max(120, "Please enter a valid age")
+    .optional(),
+  gender: z.enum(["male", "female", "other", "prefer_not_to_say"], {
+    message: "Please select your gender",
+  }),
+  location: z.string().min(2, "Please enter your location"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+})
+
+export type RegisterFormData = z.infer<typeof registerSchema>
+
 // Form input schema (what the form collects)
 export const triageFormSchema = z.object({
   // Step 1: Basic Information
@@ -31,7 +61,7 @@ export const triageFormSchema = z.object({
       message: "Age must be between 1 and 120",
     }),
   gender: z.enum(["male", "female", "other"]),
-  
+
   // Step 2: Primary Symptoms
   primarySymptom: z
     .string()
@@ -46,19 +76,19 @@ export const triageFormSchema = z.object({
     }, {
       message: "Pain level must be between 0 and 10",
     }),
-  
+
   // Step 3: Additional Symptoms
   additionalSymptoms: z.array(z.string()).optional(),
   hasTemperature: z.boolean().default(false),
   temperature: z.string().optional(),
-  
+
   // Step 4: Medical History
   hasChronicConditions: z.boolean().default(false),
   chronicConditions: z.string().optional(),
   currentMedications: z.string().optional(),
   hasAllergies: z.boolean().default(false),
   allergies: z.string().optional(),
-  
+
   // Step 5: Emergency Indicators
   hasChestPain: z.boolean().default(false),
   hasDifficultyBreathing: z.boolean().default(false),
@@ -119,7 +149,7 @@ export function transformTriageFormToApi(formData: TriageFormData): TriageApiDat
 // Common symptom options for the form
 export const commonSymptoms = [
   "Fever",
-  "Headache", 
+  "Headache",
   "Cough",
   "Sore throat",
   "Nausea",
