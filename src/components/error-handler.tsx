@@ -41,15 +41,15 @@ export function ErrorHandler({
 }: ErrorHandlerProps) {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false)
 
-  if (!error) return null
-
-  const errorInfo = getErrorInfo(error)
-
   React.useEffect(() => {
     if (variant === 'dialog' && error) {
       setIsDialogOpen(true)
     }
   }, [error, variant])
+
+  if (!error) return null
+
+  const errorInfo = getErrorInfo(error)
 
   const handleDismiss = () => {
     setIsDialogOpen(false)

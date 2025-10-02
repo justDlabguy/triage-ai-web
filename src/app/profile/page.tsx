@@ -15,8 +15,6 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { User, Mail, Shield, Settings, LogOut } from "lucide-react"
-import { ProfileLoading } from "@/components/loading-states"
-import { ErrorHandler } from "@/components/error-handler"
 import { useState } from "react"
 
 export default function ProfilePage() {
@@ -158,10 +156,17 @@ export default function ProfilePage() {
                                 variant="destructive"
                                 className="w-full justify-start"
                                 onClick={handleLogout}
+                                disabled={isLoading}
                             >
                                 <LogOut className="mr-2 h-4 w-4" />
-                                Sign Out
+                                {isLoading ? 'Signing Out...' : 'Sign Out'}
                             </Button>
+
+                            {error && (
+                                <div className="mt-2 text-sm text-red-600">
+                                    {error}
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
 

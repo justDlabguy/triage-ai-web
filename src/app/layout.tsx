@@ -68,22 +68,7 @@ export default function RootLayout({
         {/* Screen reader announcements */}
         <div id="announcements" aria-live="polite" aria-atomic="true" className="sr-only" />
         
-        {/* High contrast mode styles */}
-        <style jsx global>{`
-          @media (prefers-contrast: high) {
-            * {
-              border-color: currentColor !important;
-            }
-          }
-          
-          @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-              animation-duration: 0.01ms !important;
-              animation-iteration-count: 1 !important;
-              transition-duration: 0.01ms !important;
-            }
-          }
-        `}</style>
+
       </body>
     </html>
   );

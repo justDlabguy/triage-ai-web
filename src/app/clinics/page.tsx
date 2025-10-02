@@ -18,8 +18,7 @@ import { LocationForm } from "@/components/location-form"
 import { ClinicSearch } from "@/components/clinic-search"
 import { LocationCoordinates } from "@/lib/location"
 import { Clinic } from "@/lib/clinics"
-import { ErrorHandler, type ApiError } from "@/components/error-handler"
-import { ClinicSearchLoading } from "@/components/loading-states"
+
 
 export default function ClinicsPage() {
   const [selectedLocation, setSelectedLocation] = useState<LocationCoordinates | null>(null)
