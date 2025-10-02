@@ -1,26 +1,236 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.625rem;
+  /* Healthcare-themed colors in HSL format */
+  --background: 210 20% 98%;
+  /* Clean white with slight blue tint */
+  --foreground: 220 14% 11%;
+  /* Dark blue-gray for text */
+  --card: 0 0% 100%;
+  /* Pure white for cards */
+  --card-foreground: 220 14% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 14% 11%;
+  /* Medical blue primary color */
+  --primary: 220 70% 50%;
+  /* Medical blue */
+  --primary-foreground: 210 20% 98%;
+  /* Light blue-gray secondary */
+  --secondary: 210 40% 95%;
+  --secondary-foreground: 220 13% 26%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  /* Soft blue accent */
+  --accent: 210 40% 92%;
+  --accent-foreground: 220 13% 26%;
+  /* Medical red for destructive actions */
+  --destructive: 0 84% 60%;
+  /* Medical red */
+  --destructive-foreground: 210 20% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 220 70% 50%;
+  /* Same as primary */
+
+  /* Custom healthcare colors */
+  --success: 142 76% 36%;
+  /* Medical green */
+  --success-foreground: 355 100% 97%;
+  --warning: 38 92% 50%;
+  /* Warning yellow */
+  --warning-foreground: 48 96% 89%;
+  --info: 213 94% 68%;
+  /* Info blue */
+  --info-foreground: 210 20% 98%;
+
+  /* Urgency level colors */
+  --urgency-low: 142 76% 36%;
+  /* Green */
+  --urgency-medium: 38 92% 50%;
+  /* Yellow */
+  --urgency-high: 25 95% 53%;
+  /* Orange */
+  --urgency-emergency: 0 84% 60%;
+  /* Red */
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  /* Dark healthcare theme */
+  --background: 220 27% 8%;
+  /* Dark blue-gray */
+  --foreground: 210 20% 95%;
+  /* Light text */
+  --card: 220 27% 12%;
+  /* Slightly lighter dark */
+  --card-foreground: 210 20% 95%;
+  --popover: 220 27% 12%;
+  --popover-foreground: 210 20% 95%;
+  /* Lighter medical blue for dark mode */
+  --primary: 220 70% 65%;
+  /* Lighter medical blue */
+  --primary-foreground: 220 27% 8%;
+  --secondary: 220 27% 18%;
+  --secondary-foreground: 210 20% 90%;
+  --muted: 220 27% 15%;
+  --muted-foreground: 215 16% 70%;
+  --accent: 220 27% 20%;
+  --accent-foreground: 210 20% 90%;
+  /* Brighter red for dark mode */
+  --destructive: 0 84% 65%;
+  /* Brighter medical red */
+  --destructive-foreground: 210 20% 98%;
+  --border: 220 27% 20%;
+  --input: 220 27% 15%;
+  --ring: 220 70% 65%;
+
+  /* Dark mode custom colors */
+  --success: 142 76% 50%;
+  /* Brighter green */
+  --success-foreground: 220 27% 8%;
+  --warning: 38 92% 60%;
+  /* Brighter yellow */
+  --warning-foreground: 220 27% 8%;
+  --info: 213 94% 75%;
+  /* Brighter blue */
+  --info-foreground: 220 27% 8%;
+
+  /* Dark mode urgency colors */
+  --urgency-low: 142 76% 50%;
+  /* Green */
+  --urgency-medium: 38 92% 60%;
+  /* Yellow */
+  --urgency-high: 25 95% 60%;
+  /* Orange */
+  --urgency-emergency: 0 84% 65%;
+  /* Red */
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    outline-color: hsl(var(--ring) / 0.5);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+
+  /* Healthcare-specific utility classes */
+  .text-success {
+    color: hsl(var(--success));
+  }
+
+  .text-warning {
+    color: hsl(var(--warning));
+  }
+
+  .text-info {
+    color: hsl(var(--info));
+  }
+
+  .bg-success {
+    background-color: hsl(var(--success));
+    color: hsl(var(--success-foreground));
+  }
+
+  .bg-warning {
+    background-color: hsl(var(--warning));
+    color: hsl(var(--warning-foreground));
+  }
+
+  .bg-info {
+    background-color: hsl(var(--info));
+    color: hsl(var(--info-foreground));
+  }
+
+  /* Urgency level classes */
+  .urgency-low {
+    color: hsl(var(--urgency-low));
+  }
+
+  .urgency-medium {
+    color: hsl(var(--urgency-medium));
+  }
+
+  .urgency-high {
+    color: hsl(var(--urgency-high));
+  }
+
+  .urgency-emergency {
+    color: hsl(var(--urgency-emergency));
+  }
+
+  .bg-urgency-low {
+    background-color: hsl(var(--urgency-low));
+    color: hsl(var(--success-foreground));
+  }
+
+  .bg-urgency-medium {
+    background-color: hsl(var(--urgency-medium));
+    color: hsl(var(--warning-foreground));
+  }
+
+  .bg-urgency-high {
+    background-color: hsl(var(--urgency-high));
+    color: hsl(var(--warning-foreground));
+  }
+
+  .bg-urgency-emergency {
+    background-color: hsl(var(--urgency-emergency));
+    color: hsl(var(--success-foreground));
+  }
+
+  /* Medical card styling */
+  .medical-card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  /* Demo mode indicator */
+  .demo-indicator {
+    background-color: hsl(var(--info));
+    color: hsl(var(--info-foreground));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
 }
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+

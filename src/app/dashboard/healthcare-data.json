@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "header": "Fever and Headache Analysis",
+    "type": "Symptom Analysis",
+    "status": "Completed",
+    "urgency": "Medium",
+    "recommendation": "Monitor symptoms, rest, and hydrate",
+    "date": "2024-01-15",
+    "clinic": "Lagos General Hospital"
+  },
+  {
+    "id": 2,
+    "header": "Chest Pain Assessment",
+    "type": "Emergency Triage",
+    "status": "Urgent",
+    "urgency": "High",
+    "recommendation": "Seek immediate medical attention",
+    "date": "2024-01-14",
+    "clinic": "Emergency Care Center"
+  },
+  {
+    "id": 3,
+    "header": "Routine Health Check",
+    "type": "Wellness Log",
+    "status": "Completed",
+    "urgency": "Low",
+    "recommendation": "Continue healthy lifestyle",
+    "date": "2024-01-13",
+    "clinic": "Community Health Center"
+  },
+  {
+    "id": 4,
+    "header": "Stomach Pain Evaluation",
+    "type": "Symptom Analysis",
+    "status": "In Progress",
+    "urgency": "Medium",
+    "recommendation": "Dietary adjustments recommended",
+    "date": "2024-01-12",
+    "clinic": "Digestive Health Clinic"
+  },
+  {
+    "id": 5,
+    "header": "Skin Rash Consultation",
+    "type": "Dermatology",
+    "status": "Completed",
+    "urgency": "Low",
+    "recommendation": "Topical treatment prescribed",
+    "date": "2024-01-11",
+    "clinic": "Skin Care Specialists"
+  },
+  {
+    "id": 6,
+    "header": "Respiratory Symptoms",
+    "type": "Symptom Analysis",
+    "status": "Completed",
+    "urgency": "Medium",
+    "recommendation": "Follow-up in 3 days",
+    "date": "2024-01-10",
+    "clinic": "Respiratory Health Center"
+  },
+  {
+    "id": 7,
+    "header": "Blood Pressure Monitoring",
+    "type": "Wellness Log",
+    "status": "Ongoing",
+    "urgency": "Low",
+    "recommendation": "Continue medication",
+    "date": "2024-01-09",
+    "clinic": "Cardiology Center"
+  },
+  {
+    "id": 8,
+    "header": "Joint Pain Assessment",
+    "type": "Orthopedic",
+    "status": "Completed",
+    "urgency": "Medium",
+    "recommendation": "Physical therapy recommended",
+    "date": "2024-01-08",
+    "clinic": "Orthopedic Specialists"
+  }
+]
