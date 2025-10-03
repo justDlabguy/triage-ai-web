@@ -79,7 +79,7 @@ export function UserProfile({ className }: { className?: string }) {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  
+
   const { user, setUser } = useAuthStore()
 
   const profileForm = useForm<ProfileUpdateData>({
@@ -117,7 +117,7 @@ export function UserProfile({ className }: { className?: string }) {
           gender?: string;
           location?: string;
         }>('/auth/me')
-        
+
         profileForm.reset({
           username: userData.username || "",
           fullName: userData.full_name || "",
@@ -126,7 +126,7 @@ export function UserProfile({ className }: { className?: string }) {
           gender: (userData.gender as "male" | "female" | "other" | "prefer_not_to_say") || "male",
           location: userData.location || "",
         })
-        
+
         // Note: We don't update the user in store here since userData doesn't match AuthUser interface
       } catch (error) {
         console.error('Failed to load user data:', error)
@@ -390,8 +390,8 @@ export function UserProfile({ className }: { className?: string }) {
                 />
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="bg-emerald-600 hover:bg-emerald-700"
                 disabled={isLoading}
               >
@@ -536,8 +536,8 @@ export function UserProfile({ className }: { className?: string }) {
                 )}
               />
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="bg-emerald-600 hover:bg-emerald-700"
                 disabled={isPasswordLoading}
               >
