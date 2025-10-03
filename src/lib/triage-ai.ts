@@ -6,33 +6,128 @@ import { apiClient } from "./api"
 export class TriageAIService {
   static async analyzeTriage(data: TriageApiData): Promise<TriageResult> {
     try {
-      // Try to call the real backend API first
+      // Transform detailed form data to simple query format for existing backend
+      const symptomParts = [data.primarySymptom];
+      
+      // Add basic info
+      symptomParts.push(`Age: ${data.age}, Gender: ${data.gender}`);
+      symptomParts.push(`Duration: ${data.symptomDuration.replace('_', ' ')}`);
+      symptomParts.push(`Pain level: ${data.painLevel}/10`);
+      
+      // Add additional symptoms
+      if (data.additionalSymptoms && data.additionalSymptoms.length > 0) {
+        symptomParts.push(`Additional symptoms: ${data.additionalSymptoms.join(', ')}`);
+      }
+      
+      // Add temperature info
+      if (data.hasTemperature && data.temperature) {
+        symptomParts.push(`Temperature: ${data.temperature}°C`);
+      }
+      
+      // Add medical history
+      if (data.hasChronicConditions && data.chronicConditions) {
+        symptomParts.push(`Chronic conditions: ${data.chronicConditions}`);
+      }
+      
+      if (data.currentMedications) {
+        symptomParts.push(`Current medications: ${data.currentMedications}`);
+      }
+      
+      if (data.hasAllergies && data.allergies) {
+        symptomParts.push(`Allergies: ${data.allergies}`);
+      }
+      
+      // Add emergency indicators
+      const emergencySymptoms = [];
+      if (data.hasChestPain) emergencySymptoms.push("chest pain");
+      if (data.hasDifficultyBreathing) emergencySymptoms.push("difficulty breathing");
+      if (data.hasLossOfConsciousness) emergencySymptoms.push("loss of consciousness");
+      if (data.hasSevereHeadache) emergencySymptoms.push("severe headache");
+      if (data.hasUncontrolledBleeding) emergencySymptoms.push("uncontrolled bleeding");
+      
+      if (emergencySymptoms.length > 0) {
+        symptomParts.push(`Emergency symptoms: ${emergencySymptoms.join(', ')}`);
+      }
+      
+      // Combine all parts into comprehensive query
+      const comprehensiveQuery = symptomParts.join('. ');
+      
+      // Call existing backend endpoint with transformed data
       const response = await apiClient.post<{
-        urgency_level: string;
-        recommendation: string;
-        symptoms: string[];
-        possible_conditions: string[];
-        next_steps: string[];
-        disclaimer: string;
-        estimated_wait_time?: string;
-        nearby_clinic?: {
-          name: string;
-          address: string;
-          phone: string;
-          distance: string;
+        data: {
+          response: string;
+          confidence: number;
+          recommendations: string[];
+          severity?: string;
         };
-      }>('/triage/analyze', data);
+        success: boolean;
+        message: string;
+      }>('/triage/triage', {
+        query: comprehensiveQuery,
+        user_id: 'anonymous_user',
+        input_method: 'text'
+      });
 
       // Transform backend response to frontend format
+      const backendData = response.data;
+      
+      // Determine urgency level based on emergency indicators and pain level
+      let urgencyLevel: TriageResult["urgencyLevel"] = "non-urgent";
+      if (emergencySymptoms.length > 0 || data.painLevel >= 8) {
+        urgencyLevel = "emergency";
+      } else if (data.painLevel >= 6 || (data.hasTemperature && data.temperature && data.temperature >= 39)) {
+        urgencyLevel = "urgent";
+      } else if (data.painLevel >= 4 || (data.hasTemperature && data.temperature && data.temperature >= 38)) {
+        urgencyLevel = "semi-urgent";
+      }
+      
+      // Generate recommendations based on urgency
+      let nextSteps: string[] = [];
+      let estimatedWaitTime = "1-2 weeks";
+      
+      if (urgencyLevel === "emergency") {
+        nextSteps = [
+          "Seek immediate emergency medical attention",
+          "Call emergency services or go to the nearest emergency room",
+          "Do not delay medical care"
+        ];
+        estimatedWaitTime = "Immediate";
+      } else if (urgencyLevel === "urgent") {
+        nextSteps = [
+          "Seek medical attention within 2-4 hours",
+          "Visit urgent care or emergency room",
+          "Monitor symptoms closely"
+        ];
+        estimatedWaitTime = "2-4 hours";
+      } else if (urgencyLevel === "semi-urgent") {
+        nextSteps = [
+          "Schedule appointment with healthcare provider within 24-48 hours",
+          "Monitor symptoms and seek immediate care if they worsen",
+          "Consider over-the-counter symptom relief as appropriate"
+        ];
+        estimatedWaitTime = "24-48 hours";
+      } else {
+        nextSteps = [
+          "Monitor symptoms over the next few days",
+          "Schedule routine appointment if symptoms persist",
+          "Use appropriate self-care measures"
+        ];
+      }
+      
       return {
-        urgencyLevel: response.urgency_level as TriageResult["urgencyLevel"],
-        recommendation: response.recommendation,
-        symptoms: response.symptoms,
-        possibleConditions: response.possible_conditions,
-        nextSteps: response.next_steps,
-        disclaimer: response.disclaimer,
-        estimatedWaitTime: response.estimated_wait_time,
-        nearbyClinic: response.nearby_clinic
+        urgencyLevel,
+        recommendation: backendData.response,
+        symptoms: [data.primarySymptom, ...(data.additionalSymptoms || [])],
+        possibleConditions: [], // Could be enhanced with AI analysis
+        nextSteps,
+        disclaimer: "This AI triage tool is for informational purposes only and should not replace professional medical advice. Always consult with qualified healthcare providers for proper diagnosis and treatment. In case of emergency, call your local emergency services immediately.",
+        estimatedWaitTime,
+        nearbyClinic: {
+          name: "Lagos General Hospital",
+          address: "123 Medical Center Drive, Victoria Island, Lagos",
+          phone: "+234-1-234-5678",
+          distance: "2.3 km"
+        }
       };
     } catch (error) {
       console.warn('Backend API unavailable, falling back to mock analysis:', error);
