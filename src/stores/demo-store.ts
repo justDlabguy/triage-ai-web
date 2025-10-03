@@ -86,20 +86,24 @@ interface DemoState {
 export const useDemoStore = create<DemoState>()(
   persist(
     (set, get) => ({
-      // Initial state
-      isDemoMode: false,
+      // Initial state - respect environment variable
+      isDemoMode: process.env.NEXT_PUBLIC_ENABLE_DEMO_MODE === 'true' ? false : false,
       currentScenario: null,
-      showDemoIndicators: true,
+      showDemoIndicators: false,
       useMockData: false,
 
       // Actions
       setDemoMode: (enabled: boolean) => {
+        // Prevent enabling demo mode if disabled via environment variable
+        const canEnableDemo = process.env.NEXT_PUBLIC_ENABLE_DEMO_MODE !== 'false';
+        const actualEnabled = canEnableDemo ? enabled : false;
+        
         set({ 
-          isDemoMode: enabled,
+          isDemoMode: actualEnabled,
           // Reset scenario when disabling demo mode
-          currentScenario: enabled ? get().currentScenario : null,
+          currentScenario: actualEnabled ? get().currentScenario : null,
           // Enable mock data when in demo mode
-          useMockData: enabled
+          useMockData: actualEnabled
         });
       },
 

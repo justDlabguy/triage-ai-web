@@ -130,10 +130,11 @@ export class TriageAIService {
         }
       };
     } catch (error) {
-      console.warn('Backend API unavailable, falling back to mock analysis:', error);
+      console.error('Backend API error:', error);
       
-      // Fallback to mock analysis if backend is unavailable
-      return this.mockAnalyzeTriage(data);
+      // Re-throw the error instead of falling back to mock data
+      // This ensures users see the real error and know the backend is unavailable
+      throw new Error(`Triage analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
