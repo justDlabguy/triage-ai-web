@@ -118,6 +118,7 @@ export function useSessionTimeout(options: UseSessionTimeoutOptions = {}) {
             // Clear any pending timeout
             const currentTimeoutId = timeoutIdRef.current
             if (currentTimeoutId) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 clearTimeout(currentTimeoutId)
             }
         }
