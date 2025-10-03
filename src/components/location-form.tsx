@@ -89,7 +89,7 @@ export function LocationForm({ onLocationSelected, className }: LocationFormProp
       const address = selectedCity || manualAddress
       const coordinates = await LocationService.geocodeAddress(address)
       onLocationSelected(coordinates, address)
-    } catch (err) {
+    } catch {
       setError("Unable to find location. Please try a different address.")
     } finally {
       setIsLoading(false)

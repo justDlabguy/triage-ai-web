@@ -30,7 +30,7 @@ import {
 import { DemoModeToggle } from "@/components/demo-mode-toggle"
 import { DemoBanner, DemoIndicator } from "@/components/demo-indicator"
 import { ResponsiveContainer, ResponsiveGrid, ResponsiveStack } from "@/components/responsive-layout"
-import { DashboardLoading, MedicalDataLoading } from "@/components/loading-states"
+import { DashboardLoading } from "@/components/loading-states"
 import { useDemoStore } from "@/stores/demo-store"
 import healthcareData from "./healthcare-data.json"
 import { useState, useEffect } from "react"

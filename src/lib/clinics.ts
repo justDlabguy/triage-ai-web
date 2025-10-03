@@ -1,4 +1,4 @@
-import { LocationCoordinates } from "./location"
+
 
 export interface Clinic {
   id: string

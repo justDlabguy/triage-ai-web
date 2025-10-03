@@ -109,19 +109,25 @@ export function UserProfile({ className }: { className?: string }) {
       if (!user) return
 
       try {
-        const userData = await apiClient.get<any>('/auth/me')
+        const userData = await apiClient.get<{
+          username?: string;
+          full_name?: string;
+          phone_number?: string;
+          age?: number;
+          gender?: string;
+          location?: string;
+        }>('/auth/me')
         
         profileForm.reset({
           username: userData.username || "",
           fullName: userData.full_name || "",
           phoneNumber: userData.phone_number || "",
           age: userData.age || undefined,
-          gender: userData.gender || "male",
+          gender: (userData.gender as "male" | "female" | "other" | "prefer_not_to_say") || "male",
           location: userData.location || "",
         })
         
-        // Update user in store
-        setUser(userData as any)
+        // Note: We don't update the user in store here since userData doesn't match AuthUser interface
       } catch (error) {
         console.error('Failed to load user data:', error)
       }
@@ -136,7 +142,14 @@ export function UserProfile({ className }: { className?: string }) {
     setSuccessMessage(null)
 
     try {
-      const updatedUser = await apiClient.put<any>('/auth/me', {
+      const updatedUser = await apiClient.put<{
+        username?: string;
+        full_name?: string;
+        phone_number?: string;
+        age?: number;
+        gender?: string;
+        location?: string;
+      }>('/auth/me', {
         username: data.username,
         full_name: data.fullName,
         phone_number: data.phoneNumber,
@@ -145,7 +158,7 @@ export function UserProfile({ className }: { className?: string }) {
         location: data.location,
       })
 
-      setUser(updatedUser as any)
+      // Note: We don't update the user in store here since updatedUser doesn't match AuthUser interface
       setSuccessMessage("Profile updated successfully!")
     } catch (err) {
       const apiError: ApiError = {

@@ -67,7 +67,7 @@ export function ClinicSearch({ location, address, onClinicSelect }: ClinicSearch
         setRadiusFilter(newRadius.toString())
         setTimeout(() => searchClinics(newRadius), 1000)
       }
-    } catch (err) {
+    } catch {
       setError("Unable to find clinics. Please try again.")
     } finally {
       setIsLoading(false)

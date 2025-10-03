@@ -17,7 +17,7 @@ import { triageFormSchema, type TriageFormData, commonSymptoms, durationOptions 
 import { useDemoStore } from "@/stores/demo-store"
 import { DemoIndicator } from "@/components/demo-indicator"
 import { ButtonLoading } from "@/components/loading-states"
-import { ChevronLeft, ChevronRight, User, Stethoscope, Plus, Heart, AlertTriangle, Thermometer, TestTube } from "lucide-react"
+import { ChevronLeft, ChevronRight, User, Stethoscope, Plus, Heart, AlertTriangle, Thermometer } from "lucide-react"
 
 const TOTAL_STEPS = 5
 
@@ -57,7 +57,7 @@ export function TriageForm({ onSubmit, isLoading = false }: TriageFormProps) {
         },
     })
 
-    const { watch, setValue, reset } = form
+    const { watch, setValue } = form
     const watchedValues = watch()
 
     // Auto-fill form with demo scenario data
