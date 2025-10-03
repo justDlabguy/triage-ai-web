@@ -142,7 +142,7 @@ export function UserProfile({ className }: { className?: string }) {
     setSuccessMessage(null)
 
     try {
-      const updatedUser = await apiClient.put<{
+      await apiClient.put<{
         username?: string;
         full_name?: string;
         phone_number?: string;

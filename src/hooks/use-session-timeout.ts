@@ -116,8 +116,9 @@ export function useSessionTimeout(options: UseSessionTimeoutOptions = {}) {
             clearInterval(intervalId)
 
             // Clear any pending timeout
-            if (timeoutIdRef.current) {
-                clearTimeout(timeoutIdRef.current)
+            const currentTimeoutId = timeoutIdRef.current
+            if (currentTimeoutId) {
+                clearTimeout(currentTimeoutId)
             }
         }
     }, [isAuthenticated, updateActivity, checkTimeout, checkInterval])
