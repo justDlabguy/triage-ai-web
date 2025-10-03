@@ -131,6 +131,11 @@ export const useAuthStore = create<AuthState>()(
             isLoading: false,
             error: null 
           });
+          
+          // Redirect to login page after logout
+          if (typeof window !== 'undefined') {
+            window.location.href = '/login';
+          }
         }
       },
 

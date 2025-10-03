@@ -16,18 +16,25 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { LogOut } from "lucide-react"
+import { LogoutConfirmationDialog } from "@/components/logout-confirmation-dialog"
 import { useState } from "react"
 
 export default function ProfilePage() {
     const { logout, isDemoMode } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [showLogoutDialog, setShowLogoutDialog] = useState(false)
 
-    const handleLogout = async () => {
+    const handleLogoutClick = () => {
+        setShowLogoutDialog(true)
+    }
+
+    const handleLogoutConfirm = async () => {
         setIsLoading(true)
         setError(null)
         try {
             await logout()
+            setShowLogoutDialog(false)
         } catch (error) {
             console.error('Logout failed:', error)
             setError('Failed to logout. Please try again.')
@@ -98,12 +105,12 @@ export default function ProfilePage() {
                         <CardContent>
                             <Button
                                 variant="destructive"
-                                onClick={handleLogout}
+                                onClick={handleLogoutClick}
                                 disabled={isLoading}
                                 className="w-full sm:w-auto"
                             >
                                 <LogOut className="mr-2 h-4 w-4" />
-                                {isLoading ? 'Signing Out...' : 'Sign Out'}
+                                Sign Out
                             </Button>
 
                             {error && (
@@ -113,6 +120,13 @@ export default function ProfilePage() {
                             )}
                         </CardContent>
                     </Card>
+
+                    <LogoutConfirmationDialog
+                        open={showLogoutDialog}
+                        onOpenChange={setShowLogoutDialog}
+                        onConfirm={handleLogoutConfirm}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         </>

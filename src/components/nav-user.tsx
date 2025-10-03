@@ -28,6 +28,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useAuth } from "@/components/auth-provider"
+import { LogoutConfirmationDialog } from "@/components/logout-confirmation-dialog"
+import { useState } from "react"
 
 export function NavUser({
   user,
@@ -39,6 +42,25 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { logout } = useAuth()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false)
+
+  const handleLogoutClick = () => {
+    setShowLogoutDialog(true)
+  }
+
+  const handleLogoutConfirm = async () => {
+    setIsLoggingOut(true)
+    try {
+      await logout()
+      setShowLogoutDialog(false)
+    } catch (error) {
+      console.error('Logout failed:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
 
   return (
     <SidebarMenu>
@@ -98,12 +120,23 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={handleLogoutClick}
+              disabled={isLoggingOut}
+              className="text-red-600 focus:text-red-600 focus:bg-red-50"
+            >
               <IconLogout />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        
+        <LogoutConfirmationDialog
+          open={showLogoutDialog}
+          onOpenChange={setShowLogoutDialog}
+          onConfirm={handleLogoutConfirm}
+          isLoading={isLoggingOut}
+        />
       </SidebarMenuItem>
     </SidebarMenu>
   )

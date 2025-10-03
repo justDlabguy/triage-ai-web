@@ -5,6 +5,8 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useAuthStore } from '@/stores/auth-store'
 import { useDemoStore } from '@/stores/demo-store'
 import { HydrationBoundary } from './hydration-boundary'
+import { useSessionTimeout } from '@/hooks/use-session-timeout'
+import { SessionWarningDialog } from './session-warning-dialog'
 
 interface AuthProviderProps {
   children: React.ReactNode
@@ -14,8 +16,21 @@ function AuthProviderInner({ children }: AuthProviderProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const { checkAuth, isAuthenticated } = useAuthStore()
+  const { checkAuth, isAuthenticated, logout } = useAuthStore()
   const [mounted, setMounted] = useState(false)
+  
+  // Session timeout management
+  const {
+    extendSession,
+    showWarningDialog,
+    setShowWarningDialog,
+    remainingMinutes
+  } = useSessionTimeout({
+    warningTime: 5, // Show warning 5 minutes before expiry
+    timeoutTime: 30, // Auto logout after 30 minutes of inactivity
+    checkInterval: 60, // Check every minute
+    showWarning: true
+  })
 
   useEffect(() => {
     setMounted(true)
@@ -61,7 +76,20 @@ function AuthProviderInner({ children }: AuthProviderProps) {
     return <>{children}</>
   }
 
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      
+      {/* Session Warning Dialog */}
+      <SessionWarningDialog
+        open={showWarningDialog}
+        onOpenChange={setShowWarningDialog}
+        onExtendSession={extendSession}
+        onLogout={logout}
+        remainingMinutes={remainingMinutes}
+      />
+    </>
+  )
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
